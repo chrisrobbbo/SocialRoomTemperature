@@ -13,16 +13,16 @@ namespace AwsDotnetCsharp
 {
     // ReSharper disable once UnusedType.Global
     // ReSharper disable once UnusedMember.Global
-    public class CreateMeetingHandler
+    public class CreateMeetingFeedbackHandler
     {
-        private readonly IConverter<CreateMeetingRequest> _meetingRequestConverter;
-        private readonly ICommand<CreateMeetingRequest, DynamoDbMeeting> _createMeetingCommand;
+        private readonly IConverter<CreateMeetingFeedbackRequest> _meetingRequestConverter;
+        private readonly ICommand<CreateMeetingFeedbackRequest, DynamoDbFeedback> _createMeetingCommand;
 
-        public CreateMeetingHandler()
+        public CreateMeetingFeedbackHandler()
         {
             var amazonDynamoDbClient = new AmazonDynamoDBClient();
-            _meetingRequestConverter = new MeetingRequestConverter();
-            _createMeetingCommand = new CreateMeetingCommand(new DynamoDBContext(amazonDynamoDbClient));
+            _meetingRequestConverter = new MeetingFeedbackConverter();
+            _createMeetingCommand = new CreateMeetingFeedbackCommand(new DynamoDBContext(amazonDynamoDbClient));
         }
 
         [LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]

@@ -5,12 +5,13 @@ using Newtonsoft.Json;
 
 namespace AwsDotnetCsharp.Shared.Converters
 {
-    public class MeetingRequestConverter : IMeetingRequestConverter
+    public class MeetingRequestConverter : IConverter<CreateMeetingRequest>
     {
-        public Meeting ConvertRequest(APIGatewayProxyRequest request)
+        public CreateMeetingRequest ConvertRequest(APIGatewayProxyRequest request)
         {
-            var meeting = JsonConvert.DeserializeObject<Meeting>(request.Body);
-            meeting.MeetingId = new Guid();
+            var meeting = JsonConvert.DeserializeObject<CreateMeetingRequest>(request.Body);
+            meeting.MeetingId = Guid.NewGuid();
+            
 
             return meeting;
         }

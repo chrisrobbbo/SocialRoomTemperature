@@ -16,14 +16,30 @@ package:
   individually: true
 
 functions:
-  hello:
+  create:
     handler: CsharpHandlers::AwsDotnetCsharp.CreateMeetingHandler::EntryMethod
     events:
       - http:
           path: meeting/create
           method: post
     package:
-      artifact: bin/release/netcoreapp2.1/createmeeting.zip
+      artifact: bin/release/netcoreapp2.1/CreateMeeting.zip
+  list:
+    handler: CsharpHandlers::AwsDotnetCsharp.ListMeetingsHandler::EntryMethod
+    events:
+      - http:
+          path: meeting/list
+          method: get
+    package:
+      artifact: bin/release/netcoreapp2.1/ListMeetings.zip
+  create-feedback:
+    handler: CsharpHandlers::AwsDotnetCsharp.CreateMeetingFeedbackHandler::EntryMethod
+    events:
+      - http:
+          path: meeting/feedback/create
+          method: post
+    package:
+      artifact: bin/release/netcoreapp2.1/CreateMeetingFeedback.zip
 
 resources:
   Resources:
@@ -40,9 +56,24 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+    meetingFeedback:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.meetingFeedbackTableName}
+        AttributeDefinitions:
+          - AttributeName: MeetingId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: MeetingId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+      
           
 
 custom:
   prefix: ${self:service}-
   meetingTableName: ${self:custom.prefix}meeting
+  meetingFeedbackTableName: ${self:custom.prefix}meeting-feedback
 

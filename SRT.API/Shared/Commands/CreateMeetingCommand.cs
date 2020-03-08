@@ -4,7 +4,7 @@ using AwsDotnetCsharp.Shared.Models;
 
 namespace AwsDotnetCsharp.Shared.Commands
 {
-    public class CreateMeetingCommand : ICreateMeetingCommand
+    public class CreateMeetingCommand : ICommand<CreateMeetingRequest, DynamoDbMeeting>
     {
         private readonly IDynamoDBContext _dynamoDbContext;
 
@@ -15,7 +15,7 @@ namespace AwsDotnetCsharp.Shared.Commands
             _dynamoDbContext = dynamoDbContext;
         }
 
-        public async Task<DynamoDbMeeting> Execute(Meeting meetingRequest)
+        public async Task<DynamoDbMeeting> Execute(CreateMeetingRequest meetingRequest)
         {
             var dynamoDbMeeting = new DynamoDbMeeting
             {

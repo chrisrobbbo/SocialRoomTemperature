@@ -3,8 +3,8 @@ using AwsDotnetCsharp.Shared.Models;
 
 namespace AwsDotnetCsharp.Shared.Converters
 {
-    public interface IMeetingRequestConverter
+    public interface IConverter<out TRes> where TRes : IRequest
     {
-        Meeting ConvertRequest(APIGatewayProxyRequest request);
+        TRes ConvertRequest(APIGatewayProxyRequest request);
     }
 }
